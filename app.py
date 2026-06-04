@@ -13,88 +13,88 @@ REGION = "DE"
 @st.cache_data
 def load_data():
 
-    index_url = (
+```
+index_url = (
+    f"https://www.smard.de/app/chart_data/"
+    f"{FILTER}/{REGION}/index_hour.json"
+)
+
+timestamps = requests.get(index_url).json()["timestamps"]
+
+all_data = []
+
+for ts in timestamps[-20:]:
+
+    data_url = (
         f"https://www.smard.de/app/chart_data/"
-        f"{FILTER}/{REGION}/index_hour.json"
+        f"{FILTER}/{REGION}/"
+        f"{FILTER}_{REGION}_hour_{ts}.json"
     )
 
-    timestamps = requests.get(index_url).json()["timestamps"]
+    data = requests.get(data_url).json()["series"]
 
-    all_data = []
+    for row in data:
+        if row[1] is not None:
+            all_data.append(row)
 
-    # letzte 20 Dateien laden
-    for ts in timestamps[-20:]:
+df = pd.DataFrame(
+    all_data,
+    columns=["timestamp", "load"]
+)
 
-        data_url = (
-            f"https://www.smard.de/app/chart_data/"
-            f"{FILTER}/{REGION}/"
-            f"{FILTER}_{REGION}_hour_{ts}.json"
-        )
+df["datetime"] = pd.to_datetime(
+    df["timestamp"],
+    unit="ms",
+    utc=True
+).dt.tz_convert("Europe/Berlin")
 
-        data = requests.get(data_url).json()["series"]
-
-        for row in data:
-            if row[1] is not None:
-                all_data.append(row)
-
-    df = pd.DataFrame(
-        all_data,
-        columns=["timestamp", "load"]
-    )
-
-    df["datetime"] = pd.to_datetime(
-        df["timestamp"],
-        unit="ms",
-        utc=True
-    ).dt.tz_convert("Europe/Berlin")
-
-    return df
+return df
+```
 
 df = load_data()
 
 st.sidebar.header("Filter")
 
 start = st.sidebar.date_input(
-    "Startdatum",
-    value=df["datetime"].dt.date.min()
+"Startdatum",
+value=df["datetime"].dt.date.min()
 )
 
 end = st.sidebar.date_input(
-    "Enddatum",
-    value=df["datetime"].dt.date.max()
+"Enddatum",
+value=df["datetime"].dt.date.max()
 )
 
 filtered = df[
-    (df["datetime"].dt.date >= start) &
-    (df["datetime"].dt.date <= end)
+(df["datetime"].dt.date >= start) &
+(df["datetime"].dt.date <= end)
 ]
 
 fig = px.line(
-    filtered,
-    x="datetime",
-    y="load",
-    title="Deutsche Netzlast"
+filtered,
+x="datetime",
+y="load",
+title="Deutsche Netzlast"
 )
 
 st.plotly_chart(
-    fig,
-    use_container_width=True
+fig,
+use_container_width=True
 )
 
 col1, col2, col3 = st.columns(3)
 
 col1.metric(
-    "Max Last",
-    f"{filtered['load'].max():,.0f} MW"
+"Max Last",
+f"{filtered['load'].max():,.0f} MW"
 )
 
 col2.metric(
-    "Min Last",
-    f"{filtered['load'].min():,.0f} MW"
+"Min Last",
+f"{filtered['load'].min():,.0f} MW"
 )
 
 col3.metric(
-    "Durchschnitt",
-    f"{filtered['load'].mean():,.0f} MW"
+"Durchschnitt",
+f"{filtered['load'].mean():,.0f} MW"
 )
-```
