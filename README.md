@@ -1,3 +1,65 @@
 # IT--bung
-Um die App zu öffnen, Git-Hub über Terminal in Explorer laden
-=> PS C:\Github\IT--bung> C:\Users\Lukas\.conda\envs\environment_it_energy\python.exe -m streamlit run app.py 
+
+## Beschreibung
+Dieses Projekt enthält zwei Streamlit-Apps zur Anzeige von Lastprofilen aus SMARD.
+
+## Voraussetzungen
+- Python 3.10 oder neuer
+- Streamlit und weitere Bibliotheken installiert
+- Terminal in `C:\Github\IT--bung`
+
+## Empfohlene Befehle
+
+1. Projektordner öffnen
+
+```powershell
+cd C:\Github\IT--bung
+```
+
+2. Python-Umgebung aktivieren
+
+Falls du eine Conda-Umgebung nutzt:
+
+```powershell
+conda activate environment_it_energy
+```
+
+Alternativ, falls du eine virtuelle Umgebung (`venv`) im Projektordner verwendest:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+3. Abhängigkeiten installieren
+
+```powershell
+python -m pip install --upgrade pip
+python -m pip install streamlit pandas plotly requests
+```
+
+Alternativ kannst du die Module einzeln installieren:
+
+```powershell
+python -m pip install streamlit
+python -m pip install pandas
+python -m pip install plotly
+python -m pip install requests
+```
+
+4. App starten
+
+Für die erste App:
+
+```powershell
+python -m streamlit run app.py
+```
+
+Für die Wochenvergleichs-App:
+
+```powershell
+python -m streamlit run app_weekly_overlay.py
+```
+
+## Hinweis
+Wenn im Terminal `venv` vor dem Prompt steht, bedeutet das nur, dass eine virtuelle Python-Umgebung aktiviert ist. Das ist normal und gewünscht, wenn du die App aus dieser Umgebung startest.
+
