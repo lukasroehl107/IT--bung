@@ -16,7 +16,18 @@ Dieses Projekt enthält zwei Streamlit-Apps zur Anzeige von Lastprofilen aus SMA
 cd C:\Github\IT--bung
 ```
 
-2. Python-Umgebung aktivieren
+2. Kompletter Setup-Block (kopieren und einfügen)
+
+```powershell
+cd C:\Github\IT--bung
+python -m venv .venv
+& .\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install streamlit pandas plotly requests
+python -m streamlit run app_multi_view.py
+```
+
+3. Falls du die Umgebung manuell nutzen möchtest:
 
 Falls du eine Conda-Umgebung nutzt:
 
@@ -30,7 +41,7 @@ Alternativ, falls du eine virtuelle Umgebung (`venv`) im Projektordner verwendes
 .\.venv\Scripts\Activate.ps1
 ```
 
-3. Abhängigkeiten installieren
+4. Abhängigkeiten installieren
 
 ```powershell
 python -m pip install --upgrade pip
