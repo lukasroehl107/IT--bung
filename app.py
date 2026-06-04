@@ -13,12 +13,14 @@ REGION = "DE"
 @st.cache_data
 def load_data():
 
+```
 index_url = (
     f"https://www.smard.de/app/chart_data/"
     f"{FILTER}/{REGION}/index_hour.json"
 )
 
-timestamps = requests.get(index_url).json()["timestamps"]
+response = requests.get(index_url)
+timestamps = response.json()["timestamps"]
 
 all_data = []
 
@@ -65,8 +67,8 @@ value=df["datetime"].dt.date.max()
 )
 
 filtered = df[
-(df["datetime"].dt.date >= start) &
-(df["datetime"].dt.date <= end)
+(df["datetime"].dt.date >= start)
+& (df["datetime"].dt.date <= end)
 ]
 
 fig = px.line(
