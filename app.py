@@ -13,7 +13,6 @@ REGION = "DE"
 @st.cache_data
 def load_data():
 
-```
 index_url = (
     f"https://www.smard.de/app/chart_data/"
     f"{FILTER}/{REGION}/index_hour.json"
