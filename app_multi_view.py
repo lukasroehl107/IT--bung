@@ -192,12 +192,13 @@ def main():
     mode = st.sidebar.radio(
         "Modus",
         [
-            "Zeitreihe (Datum)",
+            "Standard-Ansicht (app.py)",
             "Kalenderwochen-Overlay",
-            "Einzelne Tage vergleichen",
+            "Tage vergleichen (bis 7 Tage)",
         ],
     )
     st.sidebar.caption("Wähle den Darstellungsmodus für deinen Lastvergleich.")
+    st.sidebar.markdown("- Standard-Ansicht: klassische Datumsauswahl wie in app.py\n- Kalenderwochen-Overlay: Wochenverlauf pro Wochentag\n- Tage vergleichen: bis zu 7 einzelne Tage direkt nebeneinander")
 
     try:
         df = load_smard_hourly_data()
