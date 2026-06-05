@@ -70,8 +70,12 @@ def available_dates(df: pd.DataFrame) -> list[str]:
     return sorted(unique_dates)
 
 
-def render_time_series(df: pd.DataFrame):
-    st.header("Zeitreihe: Netzlast")
+def render_time_series(df: pd.DataFrame, start_date: pd.Timestamp | None = None, end_date: pd.Timestamp | None = None):
+    title = "Lastprofil: Netzlast"
+    if start_date is not None and end_date is not None:
+        title = f"Lastprofil: {start_date} bis {end_date}"
+
+    st.header(title)
     if df.empty:
         st.warning("Keine Daten verfügbar.")
         return
@@ -80,7 +84,7 @@ def render_time_series(df: pd.DataFrame):
         df,
         x="datetime",
         y="load",
-        title="Deutsche Netzlast über den Zeitraum",
+        title=title,
         labels={"datetime": "Zeit", "load": "Netzlast (MW)"},
     )
     fig.update_layout(xaxis_title="Datum", yaxis_title="Last (MW)")
@@ -192,13 +196,17 @@ def main():
     mode = st.sidebar.radio(
         "Modus",
         [
-            "Standard-Ansicht (app.py)",
+            "Standard-Ansicht (Datum von/bis)",
             "Kalenderwochen-Overlay",
             "Tage vergleichen (bis 7 Tage)",
         ],
     )
     st.sidebar.caption("Wähle den Darstellungsmodus für deinen Lastvergleich.")
-    st.sidebar.markdown("- Standard-Ansicht: klassische Datumsauswahl wie in app.py\n- Kalenderwochen-Overlay: Wochenverlauf pro Wochentag\n- Tage vergleichen: bis zu 7 einzelne Tage direkt nebeneinander")
+    st.sidebar.markdown(
+        "- Standard-Ansicht: Lastprofile nacheinander von einem wählbaren Datum bis zu einem wählbaren Datum\n"
+        "- Kalenderwochen-Overlay: Wochenverlauf pro Wochentag\n"
+        "- Tage vergleichen: bis zu 7 einzelne Tage direkt nebeneinander"
+    )
 
     try:
         df = load_smard_hourly_data()
@@ -210,11 +218,14 @@ def main():
         st.warning("Keine Daten verfügbar.")
         return
 
-    if mode == "Zeitreihe (Datum)":
+    if mode == "Standard-Ansicht (Datum von/bis)":
         start = st.sidebar.date_input("Startdatum", value=df["date"].min())
         end = st.sidebar.date_input("Enddatum", value=df["date"].max())
-        filtered = df[(df["date"] >= start) & (df["date"] <= end)]
-        render_time_series(filtered)
+        if end < start:
+            st.warning("Das Enddatum muss gleich oder später als das Startdatum sein.")
+        else:
+            filtered = df[(df["date"] >= start) & (df["date"] <= end)]
+            render_time_series(filtered, start, end)
 
     elif mode == "Kalenderwochen-Overlay":
         week_options = available_weeks(df)
