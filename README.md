@@ -59,7 +59,7 @@ python -m pip install requests
 
 4. App starten
 
-Für die erste App:
+Für die normale App:
 
 ```powershell
 python -m streamlit run app.py
@@ -69,6 +69,12 @@ Für die Wochenvergleichs-App:
 
 ```powershell
 python -m streamlit run app_weekly_overlay.py
+```
+
+Für die Multi-View-App:
+
+```powershell
+python -m streamlit run app_multi_view.py
 ```
 
 ## Hinweis
