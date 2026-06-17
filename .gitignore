@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtuelle Umgebungen
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Streamlit
+.streamlit/secrets.toml
