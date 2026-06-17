@@ -1,5 +1,11 @@
-name: it-bung
+name: base
+channels:
+  - conda-forge
+  - defaults
 dependencies:
   - python=3.10
-  - flake8
+  - pip
   - pytest
+  - flake8
+  - pip:
+    # Add any pip dependencies here
