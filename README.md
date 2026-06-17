@@ -163,3 +163,4 @@ Wenn im Terminal **`(.venv)`** vor dem Prompt steht, bedeutet das nur, dass die 
 ---
 
 **Datenquelle:** [SMARD – Strommarktdaten der Bundesnetzagentur](https://www.smard.de)
+ 
