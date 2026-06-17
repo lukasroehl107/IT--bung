@@ -1,0 +1,61 @@
+# environment.yml
+# Conda-Umgebung für: IT in der Energiewirtschaft
+#
+# Initialer Aufruf:
+#  conda init powershell
+# Installation:
+#   conda env create -f environment.yml
+#
+# Aktivieren:
+#   conda activate environment_it_energy
+#
+# Aktualisieren:
+#   conda env update -f environment.yml --prune
+
+name: environment_it_energy
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Python
+  - python=3.11
+
+  # Jupyter
+  - jupyterlab>=4.0
+  - notebook>=7.0
+  - ipykernel
+  - ipywidgets
+
+  # Datenverarbeitung
+  - pandas>=2.1
+  - numpy>=1.24
+
+  # Visualisierung
+  - matplotlib>=3.8
+  - plotly>=5.18
+
+  # Machine Learning / Regression
+  - scikit-learn>=1.3
+
+  # Energiesystem-Modellierung
+  - pypsa>=1.2.0
+  - linopy>=0.3
+
+  # Solver
+  - highspy>=1.7
+
+  # Konfigurationsmanagement
+  - hydra-core>=1.3
+  - omegaconf>=2.3
+
+  # Hilfspakete
+  - openpyxl           # Excel-Dateien lesen/schreiben
+  - nbformat           # Notebook-Format
+
+  # Pip-only Pakete (falls conda-forge nicht reicht)
+  - pip
+  - pip:
+      - pydeck>=0.8,<1.0  # kompatibel mit map_styles
+      - kaleido        # Plotly Export als statische Bilder (PNG/PDF)
